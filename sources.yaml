@@ -1,118 +1,61 @@
 # ============================================================================
-#  REGISTRO FONTI - digest stampa (notizie legge/finanza/mercati/business)
+#  REGISTRO FONTI - digest stampa (legge/finanza/mercati/business)
 # ============================================================================
-#  Stesso motore del digest normativo. Differenze:
-#   - ogni fonte ha un tag "regione: ita | estero" (per dividere l'email);
-#   - si usano SOLO i feed RSS (titolo + sommario della testata + link):
-#     niente recupero dell'articolo integrale (copyright + paywall).
-#
-#  "url" puo' essere una stringa o un elenco di candidati (provati in ordine).
-#  Se un URL e' una pagina (non un feed), il programma cerca da solo il feed
-#  dichiarato nell'HTML (auto-rilevamento). Diversi URL qui sono CANDIDATI da
-#  confermare con la prima esecuzione.
+#  Stesso motore del digest normativo. Ogni fonte ha "regione: ita | estero".
+#  Solo feed RSS (titolo + sommario + link): niente articolo integrale.
 # ============================================================================
 
 sources:
 
   # ======================  ITALIA  ========================================= #
 
-  # ---- Il Sole 24 Ore ----------------------------------------------------- #
   - id: sole_economia
     name: Il Sole 24 Ore - Economia
     type: rss
     regione: ita
-    url:
-      - https://www.ilsole24ore.com/rss/economia.xml
-      - https://www.ilsole24ore.com/sez/economia
+    url: https://www.ilsole24ore.com/rss/economia.xml
 
   - id: sole_finanza
     name: Il Sole 24 Ore - Finanza
     type: rss
     regione: ita
-    url:
-      - https://www.ilsole24ore.com/rss/finanza.xml
-      - https://www.ilsole24ore.com/sez/finanza
+    url: https://www.ilsole24ore.com/rss/finanza.xml
 
   - id: sole_mercati
-    name: Il Sole 24 Ore - Mercati
+    name: Il Sole 24 Ore - Finanza & Mercati
     type: rss
     regione: ita
-    url:
-      - https://www.ilsole24ore.com/rss/finanza-mercati.xml
-      - https://www.ilsole24ore.com/sez/mondo/mercati
+    url: https://www.ilsole24ore.com/rss/finanza-mercati.xml
 
   - id: sole_norme_tributi
     name: Il Sole 24 Ore - Norme & Tributi
     type: rss
     regione: ita
-    url:
-      - https://www.ilsole24ore.com/rss/norme-tributi.xml
-      - https://www.ilsole24ore.com/sez/norme-tributi
+    url: https://www.ilsole24ore.com/rss/norme-e-tributi.xml   # CORRETTO (con la "e")
 
   - id: sole_management
     name: Il Sole 24 Ore - Management
     type: rss
     regione: ita
-    url:
-      - https://www.ilsole24ore.com/rss/management.xml
-      - https://www.ilsole24ore.com/sez/management
+    url: https://www.ilsole24ore.com/rss/management.xml
 
-  # ---- Milano Finanza ----------------------------------------------------- #
-  - id: mf_mercati
-    name: Milano Finanza - Mercati
+  - id: millionaire
+    name: Millionaire
     type: rss
     regione: ita
-    url: https://www.milanofinanza.it/mercati          # auto-rilevamento
+    url: https://www.millionaire.it/feed/    # feed unico (imprese/startup non hanno feed separati)
 
-  - id: mf_borsa_italiana
-    name: Milano Finanza - Borsa Italiana
-    type: rss
-    regione: ita
-    url: https://www.milanofinanza.it/quotazioni/borsa-italiana
-
-  - id: mf_opinioni
-    name: Milano Finanza - Opinioni
-    type: rss
-    regione: ita
-    url: https://www.milanofinanza.it/opinioni
-
-  - id: mf_cripto
-    name: Milano Finanza - Cripto
-    type: rss
-    regione: ita
-    url: https://www.milanofinanza.it/cripto
-
-  - id: mf_notizie
-    name: Milano Finanza - Notizie
-    type: rss
-    regione: ita
-    url: https://www.milanofinanza.it/news
-
-  # ---- Millionaire (WordPress: schema /category/<sezione>/feed/) ----------- #
-  - id: millionaire_imprese
-    name: Millionaire - Imprese
-    type: rss
-    regione: ita
-    url:
-      - https://www.millionaire.it/category/imprese/feed/
-      - https://www.millionaire.it/imprese/
-
-  - id: millionaire_startup
-    name: Millionaire - Startup
-    type: rss
-    regione: ita
-    url:
-      - https://www.millionaire.it/category/startup/feed/
-      - https://www.millionaire.it/startup/
-
-  # ---- Citywire Italia ---------------------------------------------------- #
   - id: citywire_ita
     name: Citywire Italia - Notizie
     type: rss
     regione: ita
-    url:
-      - https://citywire.com/it/news
-      - https://www.citywire.it/news
+    url: https://citywire.com/it/latest-news/rss.xml   # CONFERMATO (auto-rilevato)
+
+  # ---- Milano Finanza: DISATTIVATA -----------------------------------------
+  # MF non espone feed RSS pubblici (sito JS-heavy). Per riattivarla servirebbe
+  # uno scraper con browser headless (fragile). Vedi nota: decidere se lasciarla
+  # fuori o tentare la via pesante.
+  # - id: mf_mercati ...
 
 
   # ======================  ESTERO  ========================================= #
@@ -122,62 +65,44 @@ sources:
     name: Financial Times - Companies
     type: rss
     regione: estero
-    url:
-      - https://www.ft.com/companies?format=rss
-      - https://www.ft.com/companies
+    url: https://www.ft.com/companies?format=rss
 
   - id: ft_world
     name: Financial Times - World
     type: rss
     regione: estero
-    url:
-      - https://www.ft.com/world?format=rss
-      - https://www.ft.com/world
+    url: https://www.ft.com/world?format=rss
 
   - id: ft_markets
     name: Financial Times - Markets
     type: rss
     regione: estero
-    url:
-      - https://www.ft.com/markets?format=rss
-      - https://www.ft.com/markets
+    url: https://www.ft.com/markets?format=rss
 
   - id: ft_tech
     name: Financial Times - Technology
     type: rss
     regione: estero
-    url:
-      - https://www.ft.com/technology?format=rss
-      - https://www.ft.com/technology
+    url: https://www.ft.com/technology?format=rss
 
   - id: ft_opinion
     name: Financial Times - Opinion
     type: rss
     regione: estero
-    url:
-      - https://www.ft.com/opinion?format=rss
-      - https://www.ft.com/opinion
+    url: https://www.ft.com/opinion?format=rss
 
   - id: ft_lex
     name: Financial Times - Lex
     type: rss
     regione: estero
-    url:
-      - https://www.ft.com/lex?format=rss
-      - https://www.ft.com/lex
+    url: https://www.ft.com/lex?format=rss
 
-  # ---- Forbes (sezioni scelte = "tutto tranne sport") --------------------- #
+  # ---- Forbes (solo sezioni con feed pubblico) ---------------------------- #
   - id: forbes_business
     name: Forbes - Business
     type: rss
     regione: estero
     url: https://www.forbes.com/business/feed/
-
-  - id: forbes_money
-    name: Forbes - Money
-    type: rss
-    regione: estero
-    url: https://www.forbes.com/money/feed/
 
   - id: forbes_innovation
     name: Forbes - Innovation
@@ -185,13 +110,7 @@ sources:
     regione: estero
     url: https://www.forbes.com/innovation/feed/
 
-  - id: forbes_leadership
-    name: Forbes - Leadership
-    type: rss
-    regione: estero
-    url: https://www.forbes.com/leadership/feed/
-
-  # ---- The Wall Street Journal (feed noti: feeds.a.dj.com) ---------------- #
+  # ---- The Wall Street Journal -------------------------------------------- #
   - id: wsj_business
     name: WSJ - Business
     type: rss
@@ -204,14 +123,6 @@ sources:
     regione: estero
     url: https://feeds.a.dj.com/rss/RSSMarketsMain.xml
 
-  - id: wsj_economy
-    name: WSJ - Economy
-    type: rss
-    regione: estero
-    url:
-      - https://feeds.a.dj.com/rss/RSSEconomyMain.xml
-      - https://feeds.a.dj.com/rss/socialeconomyMain.xml
-
   - id: wsj_opinion
     name: WSJ - Opinion
     type: rss
@@ -219,30 +130,20 @@ sources:
     url: https://feeds.a.dj.com/rss/RSSOpinion.xml
 
   # ---- Entrepreneur ------------------------------------------------------- #
-  - id: entrepreneur_business
-    name: Entrepreneur - Business News
+  - id: entrepreneur
+    name: Entrepreneur - Latest
     type: rss
     regione: estero
-    url:
-      - https://www.entrepreneur.com/topic/business-news.rss
-      - https://www.entrepreneur.com/latest.rss
+    url: https://www.entrepreneur.com/latest.rss   # CONFERMATO
 
   # ---- Harvard Business Review -------------------------------------------- #
   - id: hbr_latest
     name: Harvard Business Review - Latest
     type: rss
     regione: estero
-    url: https://hbr.org/feed
+    url: https://feeds.hbr.org/harvardbusiness   # feed FeedBurner storico
 
-  - id: hbr_magazine
-    name: Harvard Business Review - Magazine
-    type: rss
-    regione: estero
-    url:
-      - https://hbr.org/magazine/feed
-      - https://hbr.org/the-magazine
-
-  # ---- The Economist (schema: /<sezione>/rss.xml) ------------------------- #
+  # ---- The Economist ------------------------------------------------------ #
   - id: economist_business
     name: The Economist - Business
     type: rss
@@ -266,11 +167,3 @@ sources:
     type: rss
     regione: estero
     url: https://www.economist.com/the-americas/rss.xml
-
-  - id: economist_ai
-    name: The Economist - Artificial intelligence
-    type: rss
-    regione: estero
-    url:
-      - https://www.economist.com/artificial-intelligence/rss.xml
-      - https://www.economist.com/topics/artificial-intelligence
