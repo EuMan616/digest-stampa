@@ -1,10 +1,20 @@
-name: Digest stampa - verifica feed (fase 1)
+name: Rassegna stampa
 
 on:
+  schedule:
+    - cron: "0 5 * * *"     # 07:00 in Italia d'estate, 06:00 d'inverno (UTC)
   workflow_dispatch:
+    inputs:
+      reset_state:
+        description: "Azzera lo storico e riparti da zero"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
 
 jobs:
-  raccolta:
+  rassegna:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -12,9 +22,28 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - run: python collect.py
+      - name: Raccolta
+        run: python collect.py
+      - name: Elaborazione (split + cap)
+        run: python process.py
+        env:
+          RESET_STATE: ${{ inputs.reset_state }}
+      - name: Invio email
+        run: python email_digest.py
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}
+      - name: Salva lo storico nel repo
+        if: always()
+        run: |
+          git config user.name "digest-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/seen.json || true
+          git diff --staged --quiet || git commit -m "Aggiorna storico rassegna [skip ci]"
+          git push || echo "niente da pushare"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: raccolta
+          name: rassegna
           path: data/
