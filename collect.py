@@ -56,6 +56,7 @@ class Item:
     summary_raw: str           # estratto grezzo dalla fonte (NON il riassunto AI finale)
     item_type: str             # rss | scrape | discovery | eurlex
     fetched_at: str
+    regione: Optional[str] = None
 
     def uid(self) -> str:
         return hashlib.sha1(f"{self.source_id}|{self.link}".encode("utf-8")).hexdigest()[:16]
@@ -341,6 +342,8 @@ def run() -> int:
         fetcher = FETCHERS.get(src.get("type"), fetch_unconfigured)
         try:
             items, notes = fetcher(src)
+            for it in items:
+                it.regione = src.get("regione")
         except Exception as ex:
             report.append(("ERR", sid, f"eccezione: {ex}"))
             continue
