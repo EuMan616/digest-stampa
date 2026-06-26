@@ -43,7 +43,9 @@ sources:
     name: Millionaire
     type: rss
     regione: ita
-    url: https://www.millionaire.it/feed/    # feed unico (imprese/startup non hanno feed separati)
+    url:                                      # auto-rilevamento dalla home
+      - https://www.millionaire.it/feed
+      - https://www.millionaire.it/
 
   - id: citywire_ita
     name: Citywire Italia - Notizie
@@ -141,7 +143,9 @@ sources:
     name: Harvard Business Review - Latest
     type: rss
     regione: estero
-    url: https://feeds.hbr.org/harvardbusiness   # feed FeedBurner storico
+    url:                                      # auto-rilevamento dalla home
+      - https://hbr.org/feed
+      - https://hbr.org/
 
   # ---- The Economist ------------------------------------------------------ #
   - id: economist_business
