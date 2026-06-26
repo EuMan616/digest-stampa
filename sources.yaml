@@ -2,13 +2,20 @@
 #  REGISTRO FONTI - digest stampa (legge/finanza/mercati/business)
 # ============================================================================
 #  Stesso motore del digest normativo. Ogni fonte ha "regione: ita | estero".
-#  Solo feed RSS (titolo + sommario + link): niente articolo integrale.
+#  Solo feed RSS (titolo + sommario della testata + link): niente articolo
+#  integrale (copyright + paywall). 22 fonti attive.
+#
+#  Disattivate per assenza di feed RSS pubblico accessibile:
+#    - Milano Finanza (sito JS, nessun feed)
+#    - Millionaire (nessun feed dichiarato; /feed 404)
+#    - Harvard Business Review (RSS pubblico chiuso)
+#  Per riattivarle servirebbe uno scraper headless o un generatore di feed di
+#  terze parti (es. rss.app): sconsigliato per uso personale.
 # ============================================================================
 
 sources:
 
   # ======================  ITALIA  ========================================= #
-
   - id: sole_economia
     name: Il Sole 24 Ore - Economia
     type: rss
@@ -31,7 +38,7 @@ sources:
     name: Il Sole 24 Ore - Norme & Tributi
     type: rss
     regione: ita
-    url: https://www.ilsole24ore.com/rss/norme-e-tributi.xml   # CORRETTO (con la "e")
+    url: https://www.ilsole24ore.com/rss/norme-e-tributi.xml
 
   - id: sole_management
     name: Il Sole 24 Ore - Management
@@ -39,30 +46,13 @@ sources:
     regione: ita
     url: https://www.ilsole24ore.com/rss/management.xml
 
-  - id: millionaire
-    name: Millionaire
-    type: rss
-    regione: ita
-    url:                                      # auto-rilevamento dalla home
-      - https://www.millionaire.it/feed
-      - https://www.millionaire.it/
-
   - id: citywire_ita
     name: Citywire Italia - Notizie
     type: rss
     regione: ita
-    url: https://citywire.com/it/latest-news/rss.xml   # CONFERMATO (auto-rilevato)
-
-  # ---- Milano Finanza: DISATTIVATA -----------------------------------------
-  # MF non espone feed RSS pubblici (sito JS-heavy). Per riattivarla servirebbe
-  # uno scraper con browser headless (fragile). Vedi nota: decidere se lasciarla
-  # fuori o tentare la via pesante.
-  # - id: mf_mercati ...
-
+    url: https://citywire.com/it/latest-news/rss.xml
 
   # ======================  ESTERO  ========================================= #
-
-  # ---- Financial Times ---------------------------------------------------- #
   - id: ft_companies
     name: Financial Times - Companies
     type: rss
@@ -99,7 +89,6 @@ sources:
     regione: estero
     url: https://www.ft.com/lex?format=rss
 
-  # ---- Forbes (solo sezioni con feed pubblico) ---------------------------- #
   - id: forbes_business
     name: Forbes - Business
     type: rss
@@ -112,7 +101,6 @@ sources:
     regione: estero
     url: https://www.forbes.com/innovation/feed/
 
-  # ---- The Wall Street Journal -------------------------------------------- #
   - id: wsj_business
     name: WSJ - Business
     type: rss
@@ -131,23 +119,12 @@ sources:
     regione: estero
     url: https://feeds.a.dj.com/rss/RSSOpinion.xml
 
-  # ---- Entrepreneur ------------------------------------------------------- #
   - id: entrepreneur
     name: Entrepreneur - Latest
     type: rss
     regione: estero
-    url: https://www.entrepreneur.com/latest.rss   # CONFERMATO
+    url: https://www.entrepreneur.com/latest.rss
 
-  # ---- Harvard Business Review -------------------------------------------- #
-  - id: hbr_latest
-    name: Harvard Business Review - Latest
-    type: rss
-    regione: estero
-    url:                                      # auto-rilevamento dalla home
-      - https://hbr.org/feed
-      - https://hbr.org/
-
-  # ---- The Economist ------------------------------------------------------ #
   - id: economist_business
     name: The Economist - Business
     type: rss
