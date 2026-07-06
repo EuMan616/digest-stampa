@@ -2,7 +2,7 @@ name: Rassegna stampa
 
 on:
   schedule:
-    - cron: "0 5 * * *"     # 07:00 in Italia d'estate, 06:00 d'inverno (UTC)
+    - cron: "7 3 * * *"     # 03:07 UTC = 05:07 IT estate / 04:07 inverno
   workflow_dispatch:
     inputs:
       reset_state:
